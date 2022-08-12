@@ -68,7 +68,7 @@ function fn_easymaki_reserve_products_get_cart_product_data($product_id, &$_pdat
     } else {
         if ($product['amount'] > 0) {
             $current_product_amount = db_get_field("SELECT amount FROM ?:products WHERE product_id = ?i", $product_id);
-            $new_product_amount = $current_product_amount - $reserve_amount;
+            $new_product_amount = $current_product_amount - $product['amount'];
 
             db_query("UPDATE ?:products SET amount = ?i WHERE product_id = ?i", $new_product_amount, $product_id);
 
