@@ -81,3 +81,17 @@ function fn_easymaki_reserve_products_get_cart_product_data($product_id, &$_pdat
         }
     }
 }
+
+function fn_easymaki_reserve_products_update_product_amount_pre($product_id, &$amount_delta, $product_options, $sign, $tracking, $current_amount, $product_code, $notify, $order_info, $cart_id)
+{
+    foreach ($order_info['products'] as $cart_id => $product) {
+	    
+        $reserve_data = db_get_field("SELECT * FROM ?:reserve_products WHERE user_id = ?i AND product_id = ?i", $_SESSION['auth']['user_id'], $product['product_id']);
+
+        if (!empty($reserve_data)) {
+            db_query("DELETE FROM ?:reserve_products WHERE user_id = ?i AND product_id = ?i", $_SESSION['auth']['user_id'], $product['product_id']);
+
+            $amount_delta = 0;
+        }
+    }
+}
