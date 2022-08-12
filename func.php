@@ -3,9 +3,9 @@
 function fn_easymaki_reserve_products_add_product_to_cart_get_price($product_data, $cart, $auth, $update, $_id, $data, $product_id, $amount, $price, $zero_price_action, $allow_add)
 {
 	$max_amount = db_get_field("SELECT amount FROM ?:products WHERE product_id = ?i", $product_id);
-	if ($amount > $max_amount) {
-			$amount = $max_amount;
-	}
+		if ($amount > $max_amount) {
+				$amount = $max_amount;
+		}
 	$_SESSION['auth']['reserve_data'][$product_id]['amount'] = $amount;
 }
 
@@ -31,8 +31,6 @@ function fn_easymaki_reserve_products_check_amount_in_stock_before_check($produc
 
 function fn_easymaki_reserve_products_delete_cart_product($cart, $cart_id)
 {   
-   	$unikey = $_SESSION['auth']['reserve_data']['unikey'] . $cart['products'][$cart_id]['product_id'];
-
     $reserve_data = db_get_row("SELECT amount FROM ?:reserve_products WHERE user_id = ?i AND product_id = ?i", $_SESSION['auth']['user_id'], $cart['products'][$cart_id]['product_id']);
 
     if (!empty($reserve_data['amount'])) {
