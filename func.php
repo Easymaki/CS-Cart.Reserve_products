@@ -3,9 +3,9 @@
 function fn_easymaki_reserve_products_add_product_to_cart_get_price($product_data, $cart, $auth, $update, $_id, $data, $product_id, $amount, $price, $zero_price_action, $allow_add)
 {
      $max_amount = db_get_field("SELECT amount FROM ?:products WHERE product_id = ?i", $product_id);
-	if ($amount > $max_amount) {
-			$amount = $max_amount;
-	}
+     if ($amount > $max_amount) {
+	  $amount = $max_amount;
+     }
      $_SESSION['auth']['reserve_data'][$product_id]['amount'] = $amount;
 }
 
