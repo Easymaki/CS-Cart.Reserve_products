@@ -1,5 +1,7 @@
 <?php
 
+use Tygh\Registry;
+
 function fn_easymaki_reserve_products_add_product_to_cart_get_price($product_data, $cart, $auth, $update, $_id, $data, $product_id, $amount, $price, $zero_price_action, $allow_add)
 {
      $max_amount = db_get_field("SELECT amount FROM ?:products WHERE product_id = ?i", $product_id);
@@ -71,7 +73,7 @@ function fn_easymaki_reserve_products_get_cart_product_data($product_id, &$_pdat
             db_query("UPDATE ?:products SET amount = ?i WHERE product_id = ?i", $new_product_amount, $product_id);
 
             $reserve_data = [
-                'user_id' => $_SESSION['auth']['user_id'],
+                'user_id' => Tygh::$app['session']['auth']['user_id'],
                 'product_id' => $product_id,
                 'amount' => $product['amount'],
                 'endtime' => time() + 1200,
@@ -86,10 +88,10 @@ function fn_easymaki_reserve_products_update_product_amount_pre($product_id, &$a
 {
     foreach ($order_info['products'] as $cart_id => $product) {
 	    
-        $reserve_data = db_get_row("SELECT * FROM ?:reserve_products WHERE user_id = ?i AND product_id = ?i", $_SESSION['auth']['user_id'], $product['product_id']);
+        $reserve_data = db_get_row("SELECT * FROM ?:reserve_products WHERE user_id = ?i AND product_id = ?i", Tygh::$app['session']['auth']['user_id'], $product['product_id']);
 
         if (!empty($reserve_data)) {
-            db_query("DELETE FROM ?:reserve_products WHERE user_id = ?i AND product_id = ?i", $_SESSION['auth']['user_id'], $product['product_id']);
+            db_query("DELETE FROM ?:reserve_products WHERE user_id = ?i AND product_id = ?i", Tygh::$app['session']['auth']['user_id'],, $product['product_id']);
 
             $amount_delta = 0;
         }
