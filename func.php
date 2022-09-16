@@ -91,7 +91,7 @@ function fn_easymaki_reserve_products_update_product_amount_pre($product_id, &$a
         $reserve_data = db_get_row("SELECT * FROM ?:reserve_products WHERE user_id = ?i AND product_id = ?i", Tygh::$app['session']['auth']['user_id'], $product['product_id']);
 
         if (!empty($reserve_data)) {
-            db_query("DELETE FROM ?:reserve_products WHERE user_id = ?i AND product_id = ?i", Tygh::$app['session']['auth']['user_id'],, $product['product_id']);
+            db_query("DELETE FROM ?:reserve_products WHERE user_id = ?i AND product_id = ?i", Tygh::$app['session']['auth']['user_id'], $product['product_id']);
 
             $amount_delta = 0;
         }
